@@ -15,7 +15,7 @@ MonoBehaviour:
   LastOutput: 'FactoryStub generated successfully!
 
 '
-  SelectedTypeString: IGameSession
+  SelectedTypeString: IField
   _usedTemplate: {fileID: 11400000, guid: b3357045b82a9de4aa28f545cc45f9a2, type: 2}
   _availableModelNames:
   - None
