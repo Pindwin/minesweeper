@@ -304,3 +304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 2235344157772305782}
   _frontImage: {fileID: 1105180883640991899}
+  _backImage: {fileID: 7363702396095826593}
+  _failColor: {r: 0.6603774, g: 0, b: 0, a: 1}
+  _neutralColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}

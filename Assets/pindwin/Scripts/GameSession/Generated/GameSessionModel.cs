@@ -19,6 +19,21 @@ namespace pindwin.Scripts.GameSession
 			get; private set;
 		}
 
+		public System.Int32 BombsCount
+		{
+			get; private set;
+		}
+
+		private SingleProperty<System.Boolean> _isGameLost;
+		public System.Boolean IsGameLost
+		{
+			get => _isGameLost.Value;
+			set
+			{
+				_isGameLost.Value = value;
+			}
+		}
+
 		private ModelCollectionProperty<pindwin.Scripts.Field.IField> _fields;
 		public IList<pindwin.Scripts.Field.IField> Fields
 		{
@@ -27,9 +42,14 @@ namespace pindwin.Scripts.GameSession
 		}
 
 
-		public GameSessionModel(pindwin.umvr.Model.Id id, UnityEngine.Vector3Int boardSize) : base(id)
+		public GameSessionModel(pindwin.umvr.Model.Id id, UnityEngine.Vector3Int boardSize, System.Int32 bombsCount) : base(id)
 		{
 			BoardSize = boardSize;
+
+			BombsCount = bombsCount;
+
+			_isGameLost = new SingleProperty<System.Boolean>(nameof(IsGameLost));
+			IsGameLost = default;
 
 			_fields = new ModelCollectionProperty<pindwin.Scripts.Field.IField>(nameof(Fields));
 			Fields = default;

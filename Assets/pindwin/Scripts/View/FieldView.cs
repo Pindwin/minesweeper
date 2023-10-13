@@ -12,6 +12,10 @@ namespace pindwin.Scripts.View
 	{
 		[SerializeField] private TMP_Text _text;
 		[SerializeField] private Image _frontImage;
+		[SerializeField] private Image _backImage;
+		
+		[SerializeField] private Color _failColor;
+		[SerializeField] private Color _neutralColor;
 
 		private ICommand<Vector3Int> _reportClickCommand;
 
@@ -35,11 +39,22 @@ namespace pindwin.Scripts.View
 			}
 		}
 
+		public bool IsFailed
+		{
+			set => _backImage.color = value ? _failColor : _neutralColor;
+		}
+
 		public Vector3Int Payload { private get; set; }
 		
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			_reportClickCommand.Execute(Payload);
+		}
+
+		public void Reset()
+		{
+			IsFailed = false;
+			IsHidden = true;
 		}
 	}
 }

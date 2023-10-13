@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using pindwin.development;
 using pindwin.Scripts.Field;
+using pindwin.Scripts.GameSession;
 using pindwin.Scripts.Topology;
 using pindwin.umvr.Command;
 using UnityEngine;
@@ -11,14 +12,19 @@ namespace pindwin.Scripts.Commands
 	{
 		private readonly FieldRepository _fieldRepository;
 		private readonly IMinefieldTopology _minefieldTopology;
+		private readonly GameSessionRepository _gameSessionRepository;
 		
 		private readonly List<IField> _fieldsBuffer;
 		private readonly List<IField> _fieldsToUncoverQueue;
 
-		public UncoverFieldCommand(FieldRepository fieldRepository, IMinefieldTopology minefieldTopology)
+		public UncoverFieldCommand(
+			FieldRepository fieldRepository,
+			GameSessionRepository gameSessionRepository,
+			IMinefieldTopology minefieldTopology)
 		{
 			_fieldRepository = fieldRepository.AssertNotNull();
 			_minefieldTopology = minefieldTopology.AssertNotNull();
+			_gameSessionRepository = gameSessionRepository.AssertNotNull();
 			
 			_fieldsToUncoverQueue = new List<IField>();
 			_fieldsBuffer = new List<IField>();
@@ -26,7 +32,7 @@ namespace pindwin.Scripts.Commands
 		
 		public override bool CanExecute()
 		{
-			return true;
+			return _gameSessionRepository.Value.IsGameLost == false;
 		}
 
 		protected override void ExecuteImpl(Vector3Int param)
@@ -73,7 +79,7 @@ namespace pindwin.Scripts.Commands
 		private void LoseGame(IField field)
 		{
 			field.State = FieldState.Exposed;
-			Debug.LogError("Game lost!");
+			_gameSessionRepository.Value.IsGameLost = true;
 		}
 	}
 }

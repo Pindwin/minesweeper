@@ -15,7 +15,12 @@ namespace pindwin.Scripts.View
 				for (int x = 0; x < fieldRowView.Tiles.Length; x++)
 				{
 					FieldView fieldView = fieldRowView.Tiles[x];
-					fieldView.gameObject.SetActive(x < boardSize.x);
+					bool isActive = x < boardSize.x;
+					fieldView.gameObject.SetActive(isActive);
+					if (isActive)
+					{
+						fieldView.Reset();
+					}
 				}
 			}
 		}

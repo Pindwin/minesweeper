@@ -44,6 +44,16 @@ namespace pindwin.Scripts.Field
 			}
 		}
 
+		private SingleProperty<System.Boolean> _isFailed;
+		public System.Boolean IsFailed
+		{
+			get => _isFailed.Value;
+			set
+			{
+				_isFailed.Value = value;
+			}
+		}
+
 		public UnityEngine.Vector3Int Coordinates
 		{
 			get; private set;
@@ -60,6 +70,9 @@ namespace pindwin.Scripts.Field
 
 			_bombsNearby = new SingleProperty<System.Int32>(nameof(BombsNearby));
 			BombsNearby = default;
+
+			_isFailed = new SingleProperty<System.Boolean>(nameof(IsFailed));
+			IsFailed = default;
 
 			Coordinates = coordinates;
 

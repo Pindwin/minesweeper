@@ -41,6 +41,10 @@ namespace pindwin.Scripts.Field
 				.GetProperty<FieldState>(nameof(IField.State))
 				.Subscribe(fs => _view.IsHidden = fs == FieldState.Hidden)
 				.AddTo(Subscriptions);
+			model
+				.GetProperty<bool>(nameof(IField.IsFailed))
+				.Subscribe(f => _view.IsFailed = f)
+				.AddTo(Subscriptions);
 		}
 	}
 }

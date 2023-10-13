@@ -22,6 +22,7 @@ public class GameInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<SquareGridMinefieldTopology>().AsSingle();
 
         Container.Bind<UncoverFieldCommand>().AsSingle();
+        Container.Bind<SwitchSceneCommand>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<BoardView>().FromInstance(_board).AsSingle();
         Container.BindInterfacesAndSelfTo<UnityLogger>().AsSingle();

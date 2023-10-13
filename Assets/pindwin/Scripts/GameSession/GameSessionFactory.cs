@@ -35,7 +35,7 @@ namespace pindwin.Scripts.GameSession
 				throw new ArgumentException($"Board sized {boardSize} will not fit {bombs} bombs.");
 			}
 
-			IGameSession session = base.Create(boardSize);
+			IGameSession session = base.Create(boardSize, bombs);
 			for (int x = 0; x < boardSize.x; x++)
 			{
 				for (int y = 0; y < boardSize.y; y++)

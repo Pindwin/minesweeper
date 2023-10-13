@@ -10,6 +10,8 @@ namespace pindwin.Scripts.GameSession
 	public interface IGameSession : IModel
 	{
 		Vector3Int BoardSize { get; }
+		int BombsCount { get; }
+		bool IsGameLost { get; set; }
 		IList<IField> Fields { get; set; }
 	}
 }
