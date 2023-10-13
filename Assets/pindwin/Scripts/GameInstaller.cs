@@ -26,7 +26,7 @@ public class GameInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<BoardView>().FromInstance(_board).AsSingle();
         Container.BindInterfacesAndSelfTo<UnityLogger>().AsSingle();
-        Container.BindInterfacesAndSelfTo<ApplicationController>().AsSingle();
+        Container.BindInterfacesAndSelfTo<GameController>().AsSingle();
 
         Container.Bind<ICommand<Vector3Int>>().To<UncoverFieldCommand>().FromResolve().WhenInjectedInto<FieldView>();
 
