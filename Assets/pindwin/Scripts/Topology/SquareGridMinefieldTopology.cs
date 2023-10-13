@@ -1,4 +1,6 @@
-﻿using pindwin.development;
+﻿using System;
+using System.Collections.Generic;
+using pindwin.development;
 using pindwin.Scripts.Field;
 using UnityEngine;
 
@@ -16,6 +18,31 @@ namespace pindwin.Scripts.Topology
 		}
 		
 		public int GetBombsNearby(IField field)
+		{
+			int result = 0;
+			ForEachNearbyField(field, f =>
+			{
+				if (f?.HasBomb == true)
+				{
+					result += 1;
+				}
+			});
+			return result;
+		}
+
+		public void GetFieldNeighboursNonAlloc(IField field, List<IField> neighbours)
+		{
+			neighbours.Clear();
+			ForEachNearbyField(field, f =>
+			{
+				if (f != null)
+				{
+					neighbours.Add(f);
+				}
+			});
+		}
+
+		private void ForEachNearbyField(IField field, Action<IField> routine)
 		{
 			int xOriginal = field.Coordinates.x;
 			int yOriginal = field.Coordinates.y;
@@ -40,14 +67,9 @@ namespace pindwin.Scripts.Topology
 						continue;
 					}
 
-					if (_fieldRepository.GetBy(nameof(IField.Coordinates), new Vector3Int(x, y, 0))?.HasBomb == true)
-					{
-						result += 1;
-					}
+					routine(_fieldRepository.GetBy(nameof(IField.Coordinates), new Vector3Int(x, y, 0)));
 				}
 			}
-
-			return result;
 		}
 	}
 }
