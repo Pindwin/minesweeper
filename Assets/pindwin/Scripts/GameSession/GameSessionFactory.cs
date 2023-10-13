@@ -1,6 +1,7 @@
 using System;
 using pindwin.development;
 using pindwin.Scripts.Field;
+using pindwin.Scripts.Topology;
 using pindwin.umvr.Repository;
 using UnityEngine;
 using Zenject;
@@ -12,16 +13,19 @@ namespace pindwin.Scripts.GameSession
 	{
 		private readonly FieldFactory _fieldFactory;
 		private readonly FieldRepository _fieldRepository;
+		private readonly IMinefieldTopology _minefieldTopology;
 
 		[Inject]
 		public GameSessionFactory(
 			IRepository<IGameSession> repository,
 			FieldFactory fieldFactory,
-			FieldRepository fieldRepository)
+			FieldRepository fieldRepository,
+			IMinefieldTopology minefieldTopology)
 			: this(repository, serializer: null)
 		{
 			_fieldFactory = fieldFactory.AssertNotNull();
 			_fieldRepository = fieldRepository.AssertNotNull();
+			_minefieldTopology = minefieldTopology.AssertNotNull();
 		}
 
 		public IGameSession Create(Vector2Int boardSize, int bombs)
@@ -52,6 +56,19 @@ namespace pindwin.Scripts.GameSession
 				while (field == null || field.HasBomb == true);
 
 				field.HasBomb = true;
+			}
+			
+			for (int x = 0; x < boardSize.x; x++)
+			{
+				for (int y = 0; y < boardSize.y; y++)
+				{
+					IField field = _fieldRepository.GetBy(nameof(IField.Coordinates), new Vector3Int(x, y, 0));
+					if (field.HasBomb)
+					{
+						continue;
+					}
+					field.BombsNearby = _minefieldTopology.GetBombsNearby(field);
+				}
 			}
 
 			return session;

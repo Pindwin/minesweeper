@@ -21,7 +21,21 @@ namespace pindwin.Scripts.Field
 			
 			model
 				.GetProperty<bool>(nameof(IField.HasBomb))
-				.Subscribe(b => _view.Text = b ? "X" : "")
+				.Subscribe(b =>
+				{
+					if (b)
+					{
+						_view.Text = "X";
+					}
+				})
+				.AddTo(Subscriptions);
+			model.GetProperty<int>(nameof(IField.BombsNearby)).Subscribe(bn => 
+				{
+					if (bn > 0)
+					{
+						_view.Text = bn.ToString();
+					}
+				})
 				.AddTo(Subscriptions);
 			model
 				.GetProperty<FieldState>(nameof(IField.State))

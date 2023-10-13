@@ -1971,6 +1971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _board: {fileID: 525443043}
+  _applicationSettings: {fileID: 11400000, guid: 8d7e5d2f348ca964eb05a4e7a4580ff3, type: 2}
 --- !u!114 &667248933
 MonoBehaviour:
   m_ObjectHideFlags: 0
