@@ -2,10 +2,13 @@
 
 namespace pindwin.Scripts.View
 {
-	public class BoardView : MonoBehaviour
+	public class BoardView : MonoBehaviour, IFieldViewProvider
 	{
-		[SerializeField] private TileRowView[] _tileRows;
-
-		public TileRowView[] TileRows => _tileRows;
+		[SerializeField] private FieldRowView[] _tileRows;
+		
+		public FieldView GetFieldView(Vector2Int coordinates)
+		{
+			return _tileRows[coordinates.y].Tiles[coordinates.x];
+		}
 	}
 }

@@ -1,11 +1,32 @@
-using pindwin.Scripts.Field.Generated;
+using pindwin.Scripts.View;
+using UnityEngine;
+using UniRx;
+using Zenject;
+
 namespace pindwin.Scripts.Field
 {
 	public partial class FieldReactor
 	{
+		private readonly FieldView _view;
+
+		[Inject]
+		public FieldReactor(FieldModel model, IFieldViewProvider fieldViewProvider) : this(model)
+		{
+			_view = fieldViewProvider.GetFieldView(new Vector2Int(model.Coordinates.x, model.Coordinates.y));
+		}
+		
 		protected override void BindDataSourceImpl(FieldModel model)
 		{
-			throw new System.NotImplementedException();
+			_view.Payload = model.Coordinates;
+			
+			model
+				.GetProperty<bool>(nameof(IField.HasBomb))
+				.Subscribe(b => _view.Text = b ? "X" : "")
+				.AddTo(Subscriptions);
+			model
+				.GetProperty<FieldState>(nameof(IField.State))
+				.Subscribe(fs => _view.IsHidden = fs == FieldState.Hidden)
+				.AddTo(Subscriptions);
 		}
 	}
 }
