@@ -28,14 +28,14 @@ namespace pindwin.Scripts.GameSession
 			_minefieldTopology = minefieldTopology.AssertNotNull();
 		}
 
-		public IGameSession Create(Vector2Int boardSize, int bombs)
+		public IGameSession Create(Vector3Int boardSize, int bombs)
 		{
 			if (boardSize.x * boardSize.y <= bombs)
 			{
 				throw new ArgumentException($"Board sized {boardSize} will not fit {bombs} bombs.");
 			}
 
-			IGameSession session = base.Create();
+			IGameSession session = base.Create(boardSize);
 			for (int x = 0; x < boardSize.x; x++)
 			{
 				for (int y = 0; y < boardSize.y; y++)

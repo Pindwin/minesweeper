@@ -13,7 +13,7 @@ using Zenject;
 
 namespace pindwin.Scripts.GameSession
 {
-	public partial class GameSessionFactory : ModelFactory<IGameSession, GameSessionModel>
+	public partial class GameSessionFactory : ModelFactory<IGameSession, GameSessionModel, UnityEngine.Vector3Int>
 	{
 		public GameSessionFactory(IRepository<IGameSession> repository, [InjectOptional] ISerializer<GameSessionModel> serializer) : base(repository, serializer)
 		{ }
@@ -35,8 +35,8 @@ namespace pindwin.Scripts.GameSession.Generated
 	{
 		public override void InstallBindings()
 		{
-			Container.BindFactory<Id, GameSessionModel, GameSessionFactory>();
-			Container.Bind<IModelFactory<IGameSession>>().To<GameSessionFactory>().FromResolve();
+			Container.BindFactory<Id, UnityEngine.Vector3Int, GameSessionModel, GameSessionFactory>();
+			Container.Bind<IModelFactory<IGameSession, UnityEngine.Vector3Int>>().To<GameSessionFactory>().FromResolve();
 			Container.BindFactory<GameSessionModel, GameSessionReactor, GameSessionReactorFactory>();
 			Container.BindInterfacesAndSelfTo<GameSessionRepository>().AsSingle();
 		}

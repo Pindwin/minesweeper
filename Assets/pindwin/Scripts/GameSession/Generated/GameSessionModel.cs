@@ -14,6 +14,11 @@ namespace pindwin.Scripts.GameSession
 {
 	public partial class GameSessionModel : Model<GameSessionModel>, IGameSession
 	{
+		public UnityEngine.Vector3Int BoardSize
+		{
+			get; private set;
+		}
+
 		private ModelCollectionProperty<pindwin.Scripts.Field.IField> _fields;
 		public IList<pindwin.Scripts.Field.IField> Fields
 		{
@@ -22,8 +27,10 @@ namespace pindwin.Scripts.GameSession
 		}
 
 
-		public GameSessionModel(pindwin.umvr.Model.Id id) : base(id)
+		public GameSessionModel(pindwin.umvr.Model.Id id, UnityEngine.Vector3Int boardSize) : base(id)
 		{
+			BoardSize = boardSize;
+
 			_fields = new ModelCollectionProperty<pindwin.Scripts.Field.IField>(nameof(Fields));
 			Fields = default;
 

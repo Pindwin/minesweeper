@@ -2,12 +2,14 @@
 using pindwin.Scripts.Field;
 using pindwin.umvr.Attributes;
 using pindwin.umvr.Model;
+using UnityEngine;
 
 namespace pindwin.Scripts.GameSession
 {
 	[Singleton]
 	public interface IGameSession : IModel
 	{
+		Vector3Int BoardSize { get; }
 		IList<IField> Fields { get; set; }
 	}
 }

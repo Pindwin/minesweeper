@@ -2,25 +2,22 @@
 using pindwin.Scripts.GameSession;
 using UnityEngine;
 using Zenject;
-using ILogger = pindwin.development.ILogger;
 
 namespace pindwin.Scripts
 {
 	public sealed class ApplicationController : IInitializable
 	{
-		private ILogger _logger;
 		private GameSessionFactory _gameSessionFactory;
 		
 		[Inject]
-		private void Inject(ILogger logger, GameSessionFactory gameSessionFactory)
+		private void Inject(GameSessionFactory gameSessionFactory)
 		{
-			_logger = logger.AssertNotNull();
 			_gameSessionFactory = gameSessionFactory.AssertNotNull();
 		}
 		
 		public void Initialize()
 		{
-			_gameSessionFactory.Create(new Vector2Int(5, 5), 10);
+			_gameSessionFactory.Create(new Vector3Int(8, 8, 0), 10);
 		}
 	}
 }
